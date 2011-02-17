@@ -7,5 +7,5 @@
 
 If you find that too verbose
 
-    require('sparql').cli('http://dbpedia.org/sparql').query('select * where {?s ?p ?o }', (err, res) ->
+    require('sparql').cli('http://dbpedia.org/sparql').query 'select * where {?s ?p ?o }', (err, res) ->
       console.log res
