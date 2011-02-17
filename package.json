@@ -1,0 +1,13 @@
+{
+  "name": "sparql",
+  "description": "SPARQL client",
+  "version": "0.0.1",
+  "author": "Aldo Bucchi <aldo.bucchi@gmail.com>",
+  "dependencies": {
+    "express": ">= 1.0.1",
+    "coffee-script": ">= 1.0.0"
+  },
+  "keywords": ["sparql", "rdf", "linkeddata"],
+  "directories": { "lib": "./lib" },
+  "engines": { "node": ">= 0.2.6" }
+}
