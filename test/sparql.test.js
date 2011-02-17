@@ -5,6 +5,22 @@
   assert = require('assert');
   x = exports;
   s = new sparql.SPARQLHTTPClient('http://localhost:8890/sparql');
+  x.test_prefixes = function() {
+    var ap, empty_prefix_map, prefix_map, prefixed_query, unprefixed_query;
+    prefixed_query = ' prefix foo: <urn:foo> select * where {?s ?p ?o}';
+    unprefixed_query = 'select * where {?s ?p ?o}';
+    assert.equal(sparql.does_query_have_prefixes(prefixed_query), true);
+    assert.equal(sparql.does_query_have_prefixes(unprefixed_query), false);
+    prefix_map = {
+      bar: 'urn:bar'
+    };
+    empty_prefix_map = {};
+    ap = sparql.add_prefixes;
+    assert.equal(ap(prefixed_query, prefix_map), prefixed_query);
+    assert.equal(ap(prefixed_query, empty_prefix_map), prefixed_query);
+    assert.notEqual(ap(unprefixed_query, prefix_map), unprefixed_query);
+    return assert.equal(ap(unprefixed_query, empty_prefix_map), unprefixed_query);
+  };
   x.test_query_returns_results = function() {
     return s.query('select * where {?s ?p ?o} limit 10', function(err, res) {
       var _ref;
