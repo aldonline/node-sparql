@@ -56,3 +56,4 @@ class SPARQLHTTPClient
 
 
 exports.SPARQLHTTPClient = SPARQLHTTPClient
+exports.cli = (url) -> new SPARQLHTTPClient url
