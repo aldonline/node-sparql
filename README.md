@@ -1,5 +1,5 @@
-A First Level Header
-====================
+Simple SPARQL HTTP Client library for Node.js
+=============================================
 
 Getting Started
 --------------------
