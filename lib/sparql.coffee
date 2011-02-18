@@ -38,7 +38,7 @@ class SPARQLHTTPClient
       body: querystring.stringify (query:query, format:'application/json')
       encoding: 'utf8'
     request.post opts, (err, res, body) ->
-      if res.statusCode is 200
+      if res?.statusCode? is 200
         cb? null, JSON.parse body
       else
         cb? [err, res, body]
