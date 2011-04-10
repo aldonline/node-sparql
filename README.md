@@ -27,6 +27,9 @@ Low level function. Returns the complete [SPARQL-JSON][sparql-json] results obje
     client.query 'select * where {?s ?p ?o} limit 10', (err, res) ->
       console.log row.s for row in res.results.bindings
 
+Convenience Query Methods
+------------------------------
+
 ### rows
 
 Convenience method to get to the rows directly. Builds on top of sparql.query, like most of the
@@ -52,8 +55,16 @@ Convenience method that returns an array of with the first value of each row
 What's with the rdf_value.value part?
 Read the [SPARQL-JSON][sparql-json] results format specification page.
 
-Convenience Methods
---------------------
+### cell
+
+Convenience method that returns only the first binding of the first row NULL
+
+    client.col 'select ?name where {?s foaf:name ?name} limit 1', (err, res) ->
+      console.log res
+
+
+Convenience Update Methods
+------------------------------
 
 There are a bunch of higher level methods that generate SPARQL for you.
 I am providing a small number of such methods, as I don't want this library to grow into something like Active Record.
