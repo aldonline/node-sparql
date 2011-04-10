@@ -104,7 +104,7 @@ In this case, the generated SPARQL is:
       { <urn:test:aldo> <urn:test:name> ?x }
       where { <urn:test:aldo> <urn:test:name> ?x }
 
-The 5th parameter is a boolean flag indicating wheter the triple patterns should be inverted ( useful for when you only have the reversed predicate )
+The 5th parameter is a boolean flag indicating whether the triple patterns should be inverted ( useful for when you only have the reversed predicate )
 
 
 Tests

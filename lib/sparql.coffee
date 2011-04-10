@@ -1,6 +1,16 @@
 request = require 'request'
 querystring = require 'querystring'
 
+normalize_v = (v) ->
+  return null unless v?
+  if v instanceof Array
+    if v.length is 0
+      return null
+    else
+      return v
+  else
+    return [v]
+
 get_one_key = (obj) ->
   for own k of obj
     return k
@@ -18,9 +28,20 @@ ensure_prefixes = (query, prefix_map) ->
   s = compose_prefix_string prefix_map
   if s.length is 0 or does_query_have_prefixes query then query else s + ' ' + query
 
+generate_set_sparql = ( g, s, p, o, inverted, cb ) ->
+  [e, a, v] = if inverted then [o, p, s] else [s, p, o]
+  v = normalize_v v
+  del = (if inverted then ['?x', a, e] else [e, a, '?x']).join ' '
+  if v?
+    ins =  ((if inverted then [val, a, e] else [e, a, val]).join ' ' for val in v).join ' . '
+    q = "modify #{g} delete { #{del} } insert { #{ins} } where { optional{ #{del} } }"
+  else
+    q = "delete from #{g} { #{del} } where { #{del} } "
+
 exports.ensure_prefixes = ensure_prefixes
 exports.does_query_have_prefixes = does_query_have_prefixes
 exports.compose_prefix_string = compose_prefix_string
+exports.generate_set_sparql = generate_set_sparql
 
 class Client
   
@@ -76,12 +97,7 @@ class Client
         cb null, (b[key] for b in bs)
   
   set : ( g, s, p, o, inverted, cb ) ->
-    del = (if inverted then ['?x', p, s] else [s, p, '?x']).join ' '
-    if o?
-      ins = (if inverted then [o, p, s] else [s, p, o]).join ' '
-      q = "modify #{g} delete { #{del} } insert { #{ins} } where { optional{ #{del} } }"
-    else
-      q = "delete from #{g} { #{del} } where { #{del} } "
+    q = generate_set_sparql g, s, p, o, inverted
     console.log q
     @query q, (err, res) -> cb? err, res
 

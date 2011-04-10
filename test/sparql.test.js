@@ -5,6 +5,7 @@
   assert = require('assert');
   x = exports;
   s = new sparql.Client('http://localhost:8896/sparql');
+  console.log(sparql.generate_set_sparql('G', null, 'P', 'S', true));
   x.test_prefixes = function() {
     var ap, empty_prefix_map, prefix_map, prefixed_query, unprefixed_query;
     prefixed_query = ' prefix foo: <urn:foo> select * where {?s ?p ?o}';
@@ -69,7 +70,19 @@
         return s.set(_g, _s, _p, null, false, function(err, res) {
           assert.ok(res != null, 'result must be defined');
           return s.cell("select ?v from " + _g + " where { " + _s + " " + _p + " ?v }", function(err, res) {
-            return assert.equal(res, null);
+            assert.equal(res, null);
+            return s.set(_g, _s, _p, [1, 2, 3], false, function(err, res) {
+              assert.ok(res != null, 'result must be defined');
+              return s.col("select ?v from " + _g + " where { " + _s + " " + _p + " ?v }", function(err, res) {
+                assert.equal(res.length, 3);
+                return s.set(_g, _s, _p, [], false, function(err, res) {
+                  assert.ok(res != null, 'result must be defined');
+                  return s.col("select ?v from " + _g + " where { " + _s + " " + _p + " ?v }", function(err, res) {
+                    return assert.equal(res.length, 0);
+                  });
+                });
+              });
+            });
           });
         });
       });

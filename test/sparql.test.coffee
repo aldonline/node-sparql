@@ -6,7 +6,6 @@ x = exports
 
 s = new sparql.Client 'http://localhost:8896/sparql'
 
-
 x.test_prefixes = ->
   prefixed_query = ' prefix foo: <urn:foo> select * where {?s ?p ?o}'
   unprefixed_query = 'select * where {?s ?p ?o}'
@@ -63,6 +62,7 @@ x.test_set = ->
   # 1) subject.predicate = 1
   s.set _g, _s, _p, 1, no, (err, res) ->
     assert.ok res?, 'result must be defined'
+    
     s.cell "select ?v from #{_g} where { #{_s} #{_p} ?v }", (err, res) ->
       assert.equal res.value, '1'
 
@@ -71,6 +71,18 @@ x.test_set = ->
         assert.ok res?, 'result must be defined'
         s.cell "select ?v from #{_g} where { #{_s} #{_p} ?v }", (err, res) ->
           assert.equal res, null
+          
+          # 3) subject.predicate = [1,2,3]
+          s.set _g, _s, _p, [1,2,3], no, (err, res) ->
+            assert.ok res?, 'result must be defined'
+            s.col "select ?v from #{_g} where { #{_s} #{_p} ?v }", (err, res) ->
+              assert.equal res.length, 3
+            
+              # 4) subject.predicate = [6]
+              s.set _g, _s, _p, [], no, (err, res) ->
+                assert.ok res?, 'result must be defined'
+                s.col "select ?v from #{_g} where { #{_s} #{_p} ?v }", (err, res) ->
+                  assert.equal res.length, 0
 
 ###
 sparql
