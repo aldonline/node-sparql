@@ -108,7 +108,6 @@ class Client
   
   set : ( g, s, p, o, inverted, cb ) ->
     q = generate_set_sparql g, s, p, o, inverted
-    console.log q
     @query q, (err, res) -> cb? err, res
 
 exports.Client = Client
