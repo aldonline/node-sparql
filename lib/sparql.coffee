@@ -63,6 +63,16 @@ class Client
       else
         cb? [err, res, body]
   
+  rows : ( query, cb ) ->
+    @query query, (err, res) ->
+      if err?
+        cb err
+        return
+      if res?
+        cb null, res.results.bindings
+      else
+        cb null, null
+  
   cell : ( query, cb ) ->
     @row query, (err, res) ->
       if err?
