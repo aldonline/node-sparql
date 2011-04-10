@@ -1,0 +1,2 @@
+test/db/work/*
+test/sparql.test.js

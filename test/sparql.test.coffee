@@ -4,7 +4,7 @@ assert = require 'assert'
 
 x = exports
 
-s = new sparql.SPARQLHTTPClient 'http://localhost:8890/sparql'
+s = new sparql.Client 'http://localhost:8896/sparql'
 
 
 x.test_prefixes = ->
@@ -16,15 +16,13 @@ x.test_prefixes = ->
   prefix_map = bar:'urn:bar'
   empty_prefix_map = {}
   
-  ap = sparql.add_prefixes
+  ap = sparql.ensure_prefixes
   
   assert.equal ap( prefixed_query, prefix_map ), prefixed_query
   assert.equal ap( prefixed_query, empty_prefix_map ), prefixed_query
   
   assert.notEqual ap( unprefixed_query, prefix_map ), unprefixed_query
   assert.equal ap( unprefixed_query, empty_prefix_map ), unprefixed_query
-
-
 
 x.test_query_returns_results = ->
   s.query 'select * where {?s ?p ?o} limit 10', (err, res) ->
@@ -55,3 +53,32 @@ x.test_col = ->
     assert.ok res?, 'result must be defined'
     assert.equal res.length, 10
     assert.equal res[2].type, 'uri'
+
+# sparql select * from <urn:test:graph> where { ?s ?p ?o };
+
+x.test_set = ->
+  _g = '<urn:test:graph>'
+  _s = '<urn:test:s1>'
+  _p = '<urn:test:p1>'
+  # 1) subject.predicate = 1
+  s.set _g, _s, _p, 1, no, (err, res) ->
+    assert.ok res?, 'result must be defined'
+    s.cell "select ?v from #{_g} where { #{_s} #{_p} ?v }", (err, res) ->
+      assert.equal res.value, '1'
+
+      # 2) subject.predicate = null
+      s.set _g, _s, _p, null, no, (err, res) ->
+        assert.ok res?, 'result must be defined'
+        s.cell "select ?v from #{_g} where { #{_s} #{_p} ?v }", (err, res) ->
+          assert.equal res, null
+
+###
+sparql
+modify <urn:test:graph> delete { <urn:test:s1> <urn:test:p1> ?x } insert { <urn:test:s1> <urn:test:p1> 1 } where { optional{ <urn:test:s1> <urn:test:p1> ?x } }
+;
+
+
+###
+
+
+

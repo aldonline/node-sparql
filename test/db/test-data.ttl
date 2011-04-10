@@ -1,0 +1,7 @@
+@base <http://test/> .
+
+aldo
+  name "Aldo" ;
+  lastname "Bucchi" ;
+  email <mailto:aldo.bucchi@gmail.com>
+  .

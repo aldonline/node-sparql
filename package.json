@@ -1,6 +1,6 @@
 {
   "name": "sparql",
-  "description": "SPARQL client",
+  "description": "Simple, low-level SPARQL client",
   "version": "0.0.1",
   "author": "Aldo Bucchi <aldo.bucchi@gmail.com>",
   "dependencies": {
