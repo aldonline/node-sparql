@@ -57,7 +57,7 @@ Read the [SPARQL-JSON][sparql-json] results format specification page.
 
 ### cell
 
-Convenience method that returns only the first binding of the first row NULL
+Convenience method that returns only the first binding of the first row or NULL
 
     client.col 'select ?name where {?s foaf:name ?name} limit 1', (err, res) ->
       console.log res
