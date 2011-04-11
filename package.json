@@ -1,6 +1,6 @@
 {
   "name": "sparql",
-  "description": "Simple, low-level SPARQL client",
+  "description": "Simple, low-level SPARQL (HTTP) client",
   "version": "0.0.1",
   "author": "Aldo Bucchi <aldo.bucchi@gmail.com>",
   "dependencies": {
@@ -9,5 +9,5 @@
   },
   "keywords": ["sparql", "rdf", "linkeddata"],
   "directories": { "lib": "./lib" },
-  "engines": { "node": ">= 0.2.6" }
+  "engines": { "node": ">= 0.4.1" }
 }
