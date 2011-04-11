@@ -73,6 +73,18 @@ class Client
       else
         cb null, null
   
+  cols : ( query, cb ) ->
+    @query query, (err, res) ->
+      if err?
+        cb err
+        return
+      if res?
+        r = {}
+        r[name] = ( row[name] for row in res.results.bindings ) for name in res.head.vars
+        cb null, r
+      else
+        cb null, null
+  
   cell : ( query, cb ) ->
     @row query, (err, res) ->
       if err?
