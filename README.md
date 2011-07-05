@@ -106,6 +106,13 @@ In this case, the generated SPARQL is:
 
 The 5th parameter is a boolean flag indicating whether the triple patterns should be inverted ( useful for when you only have the reversed predicate )
 
+### One note on insertions via /sparql endpoint
+
+If you want to make insertions through the sparql endpoints, make sure that you have the permission to do that: 
+
+	$ isql
+	SQL> grant execute on DB.DBA.SPARQL_MODIFY_BY_DICT_CONTENTS to "SPARQL"; 
+
 
 Tests
 --------------------
