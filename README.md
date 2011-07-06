@@ -114,6 +114,12 @@ Tests
 
 You must have [OpenLink Virtuoso](http://virtuoso.openlinksw.com/dataspace/dav/wiki/Main/) >= 6.1.2 installed and `virtuoso`, `isql` in your path.
 
+Also, maybe you have to set Virtuoso to allow INSERT and DELETE to be done via sparql:
+
+	$ isql
+	SQL> grant execute on DB.DBA.SPARQL_MODIFY_BY_DICT_CONTENTS to "SPARQL";
+
+
 You must also have expresso
     npm install expresso
 
