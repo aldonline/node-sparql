@@ -1,2 +1,3 @@
 test/db/work/*
 test/sparql.test.js
+node_modules/
