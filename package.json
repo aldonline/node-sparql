@@ -3,6 +3,7 @@
   "description": "Simple, low-level SPARQL client",
   "version": "0.0.1",
   "author": "Aldo Bucchi <aldo.bucchi@gmail.com>",
+  "maintainer": "Herman A. Junge <haj@neosource.cl>",
   "dependencies": {
     "request": ">= 1.9.0",
     "coffee-script": ">= 1.0.0"
