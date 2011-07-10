@@ -50,7 +50,7 @@ generate_mset_sparql = ( g, s, atts, cb ) ->
        else
            x = ""
        counter = counter + 1
-       k + " " + v + x
+       k + " '" + v + "' "+ x
    q = qSjt + qAtt.join(" ") +  ". }"
 
 exports.ensure_prefixes = ensure_prefixes
