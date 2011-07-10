@@ -38,10 +38,26 @@ generate_set_sparql = ( g, s, p, o, inverted, cb ) ->
   else
     q = "delete from #{g} { #{del} } where { #{del} } "
 
+generate_mset_sparql = ( g, s, atts, cb ) ->
+   # This method doesn't check on anything, just issues an insert.
+   # If you want something safer (for now), you have to combine with get
+   qSjt = "insert into #{g} { #{s} "
+   # This is my hack to iterate over the atts object!
+   counter = 1
+   qAtt = for k,v of atts
+       if counter < Object.keys(atts).length
+           x = ";"
+       else
+           x = ""
+       counter = counter + 1
+       k + " " + v + x
+   q = qSjt + qAtt.join(" ") +  ". }"
+
 exports.ensure_prefixes = ensure_prefixes
 exports.does_query_have_prefixes = does_query_have_prefixes
 exports.compose_prefix_string = compose_prefix_string
 exports.generate_set_sparql = generate_set_sparql
+exports.generate_mset_sparql = generate_mset_sparql
 
 class Client
   
@@ -120,6 +136,10 @@ class Client
   
   set : ( g, s, p, o, inverted, cb ) ->
     q = generate_set_sparql g, s, p, o, inverted
+    @query q, (err, res) -> cb? err, res
+
+  mset : ( g, s, atts, cb ) ->
+    q = generate_mset_sparql g, s, atts
     @query q, (err, res) -> cb? err, res
 
 exports.Client = Client
