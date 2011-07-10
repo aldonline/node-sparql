@@ -106,6 +106,31 @@ In this case, the generated SPARQL is:
 
 The 5th parameter is a boolean flag indicating whether the triple patterns should be inverted ( useful for when you only have the reversed predicate )
 
+### mset
+
+One Subject, several pairs Predicate-Object 
+
+Let's group some attributes of an user
+
+	attributes = 
+		'<urn:test:username>' : 'haj'
+		'<urn:test:password>' : '123'
+		'<urn:test:name>' : 'Herman'
+
+And we invoke mset
+	
+	client.mset  '<urn:test:graph>', <urn:test:haj>', attributes, (err, res) ->
+		if err?
+			console.log 'Success'
+		else
+			console.log 'Error: ' + err
+
+The SPARQL query generated is:
+
+	INSERT INTO <urn:test:graph>
+		{ <urn:test:haj> 	<urn:test:username> 	'Haj';
+							<urn:test:password>		'123';
+							<urn:test:name>			'Herman'. }
 
 Tests
 --------------------
@@ -125,7 +150,7 @@ You must also have expresso
 
 ### Running the Tests
 
-
+(Coming Soon)
 
 
 [sparql-json]: http://www.w3.org/TR/rdf-sparql-json-res/

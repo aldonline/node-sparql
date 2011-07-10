@@ -4,7 +4,7 @@ assert = require 'assert'
 
 x = exports
 
-s = new sparql.Client 'http://localhost:8896/sparql'
+s = new sparql.Client 'http://localhost:8890/sparql'
 
 x.test_prefixes = ->
   prefixed_query = ' prefix foo: <urn:foo> select * where {?s ?p ?o}'
@@ -68,9 +68,10 @@ x.test_set = ->
 
       # 2) subject.predicate = null
       s.set _g, _s, _p, null, no, (err, res) ->
-        assert.ok res?, 'result must be defined'
-        s.cell "select ?v from #{_g} where { #{_s} #{_p} ?v }", (err, res) ->
-          assert.equal res, null
+      assert.ok res?, 'result must be defined'
+      
+      s.cell "select ?v from #{_g} where { #{_s} #{_p} ?v }", (err, res) ->
+          assert.equal res, null, 'failed'
           
           # 3) subject.predicate = [1,2,3]
           s.set _g, _s, _p, [1,2,3], no, (err, res) ->
