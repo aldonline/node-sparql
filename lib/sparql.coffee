@@ -71,7 +71,8 @@ class Client
       uri: @url
       headers:
         'content-type':'application/x-www-form-urlencoded'
-      body: querystring.stringify (query:query, format:'application/json')
+        'accept':'application/sparql-results+json'
+      body: querystring.stringify (query:query)
       encoding: 'utf8'
     request.post opts, (err, res, body) ->
       if res?.statusCode is 200
