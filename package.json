@@ -1,7 +1,7 @@
 {
   "name": "sparql",
   "description": "Simple, low-level SPARQL client",
-  "version": "0.1.2",
+  "version": "0.1.3",
   "maintainers":[{
     "name": "Aldo Bucchi",
 	"email": "aldo.bucchi@gmail.com"
