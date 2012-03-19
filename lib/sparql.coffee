@@ -66,7 +66,7 @@ class Client
   
   query : ( query, cb ) ->
     query = ensure_prefixes query, @prefix_map
-    console?.log query if @log_query? # quick n' dirty logging option
+    console?.log query if @log_query is true # quick n' dirty logging option
     opts =
       uri: @url
       headers:
