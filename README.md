@@ -1,6 +1,10 @@
 Simple SPARQL HTTP Client library for Node.js
 =============================================
 
+I WROTE THIS A LONG TIME AGO.
+I RECOMMEND YOU USE PLAIN HTTP + JSON TO DEAL WITH SPARQL ENDPOINTS.
+
+
 Getting Started
 --------------------
 
